@@ -18,8 +18,16 @@ foreach(dim RANGE 1 3)
     target_compile_definitions(${InitialConditionsLib} PRIVATE N_SPECIES=${nspecies})
 
     # Link with Libraries
-    string(CONCAT PhysicsLib Physics_${dim}D)
-    string(CONCAT DiscontinuousGalerkinLib DiscontinuousGalerkin_${dim}D)
+    if(${nspecies} EQUAL "1")
+        string(CONCAT PhysicsLib Physics_${dim}D)
+    else()
+        string(CONCAT PhysicsLib Physics_${dim}D_${nspecies}-SPECIES)
+    endif()
+    if(${nspecies} EQUAL "1")
+        string(CONCAT DiscontinuousGalerkinLib DiscontinuousGalerkin_${dim}D)
+    else()
+        string(CONCAT DiscontinuousGalerkinLib DiscontinuousGalerkin_${dim}D_${nspecies}-SPECIES)
+    endif()
     target_link_libraries(${InitialConditionsLib} ${PhysicsLib})
     target_link_libraries(${InitialConditionsLib} ${DiscontinuousGalerkinLib})
 

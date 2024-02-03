@@ -350,10 +350,10 @@ std::unique_ptr< TestsBase > TestsFactory<dim,nstate,MeshType>
 //template class TestsFactory <PHILIP_DIM,4>;
 //template class TestsFactory <PHILIP_DIM,5>;
 
-template class TestsFactory <PHILIP_DIM,5,dealii::Triangulation<PHILIP_DIM>>;
-template class TestsFactory <PHILIP_DIM,5,dealii::parallel::shared::Triangulation<PHILIP_DIM>>;
+template class TestsFactory <PHILIP_DIM,PHILIP_DIM+2+(N_SPECIES-1),dealii::Triangulation<PHILIP_DIM>>;
+template class TestsFactory <PHILIP_DIM,PHILIP_DIM+2+(N_SPECIES-1),dealii::parallel::shared::Triangulation<PHILIP_DIM>>;
 #if PHILIP_DIM!=1
-template class TestsFactory <PHILIP_DIM,5,dealii::parallel::distributed::Triangulation<PHILIP_DIM>>;
+template class TestsFactory <PHILIP_DIM,PHILIP_DIM+2+(N_SPECIES-1),dealii::parallel::distributed::Triangulation<PHILIP_DIM>>;
 #endif
 
 } // Tests namespace

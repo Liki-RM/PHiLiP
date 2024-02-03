@@ -184,15 +184,21 @@ double FlowSolverCaseBase<dim, nstate>::get_time_step() const
     return this->time_step;
 }
 
-#if N_SPECIES>1
-template class FlowSolverCaseBase<PHILIP_DIM,(PHILIP_DIM+2)+(N_SPECIES-1)>;
-#else
 template class FlowSolverCaseBase<PHILIP_DIM,1>;
 template class FlowSolverCaseBase<PHILIP_DIM,2>;
 template class FlowSolverCaseBase<PHILIP_DIM,3>;
 template class FlowSolverCaseBase<PHILIP_DIM,4>;
 template class FlowSolverCaseBase<PHILIP_DIM,5>;
 template class FlowSolverCaseBase<PHILIP_DIM,6>;
+#if N_SPECIES>1
+template class FlowSolverCaseBase<PHILIP_DIM,7>;
+template class FlowSolverCaseBase<PHILIP_DIM,8>;
+template class FlowSolverCaseBase<PHILIP_DIM,9>;
+template class FlowSolverCaseBase<PHILIP_DIM,10>;
+template class FlowSolverCaseBase<PHILIP_DIM,11>;
+template class FlowSolverCaseBase<PHILIP_DIM,12>;
+template class FlowSolverCaseBase<PHILIP_DIM,13>;
+template class FlowSolverCaseBase<PHILIP_DIM,14>;
 #endif
 
 } // FlowSolver namespace

@@ -180,7 +180,7 @@ template class NumericalFluxFactory<PHILIP_DIM, 6, FadFadType >;
 #endif
 
 #if N_SPECIES>1
-template class NumericalFluxFactory<PHILIP_DIM, 1(PHILIP_DIM+2)+(N_SPECIES-1), RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, (PHILIP_DIM+2)+(N_SPECIES-1), RadFadType >;
 #else
 template class NumericalFluxFactory<PHILIP_DIM, 1, RadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 2, RadFadType >;

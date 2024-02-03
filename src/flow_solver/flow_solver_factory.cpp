@@ -29,17 +29,17 @@ FlowSolverFactory<dim,nstate,nspecies>
     using FlowCaseEnum = Parameters::FlowSolverParam::FlowCaseType;
     const FlowCaseEnum flow_type = parameters_input->flow_solver_param.flow_case_type;
     if (flow_type == FlowCaseEnum::taylor_green_vortex){
-        if constexpr (dim==3 && nstate==dim+2){
+        if constexpr (dim==3 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicTurbulence<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::decaying_homogeneous_isotropic_turbulence){
-        if constexpr (dim==3 && nstate==dim+2){
+        if constexpr (dim==3 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicTurbulence<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::burgers_viscous_snapshot){
-        if constexpr (dim==1 && nstate==dim) {
+        if constexpr (dim==1 && (nstate==dim  && nspecies==1)) {
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<BurgersViscousSnapshot<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
@@ -49,48 +49,47 @@ FlowSolverFactory<dim,nstate,nspecies>
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::naca0012){
-        if constexpr (dim==2 && nstate==dim+2){
+        if constexpr (dim==2 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<NACA0012<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::periodic_1D_unsteady){
-        if constexpr (dim==1 && nstate==dim){
+        if constexpr (dim==1 && (nstate==dim && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<Periodic1DUnsteady<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::gaussian_bump){
-        if constexpr (dim>1 && nstate==dim+2){
+        if constexpr (dim>1 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<GaussianBump<dim, nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim, nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::isentropic_vortex){
-        if constexpr (dim>1 && nstate==dim+2){
+        if constexpr (dim>1 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicEntropyTests<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::kelvin_helmholtz_instability){
-        if constexpr (dim==2 && nstate==dim+2){
+        if constexpr (dim==2 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicEntropyTests<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::non_periodic_cube_flow){
-        if constexpr (dim==2 && nstate==1){
+        if constexpr (dim==2 && (nstate==1 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<NonPeriodicCubeFlow<dim, nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim, nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::acoustic_wave_air){
-        if constexpr (dim==2 && nstate==dim+2){
+        if constexpr (dim==2 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicCubeFlow<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::acoustic_wave_species){
-        if constexpr (dim==2 && nstate==dim+2){
+        if constexpr (dim==2 && (nstate==dim+2 && nspecies==1)){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicCubeFlow<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
     } else if (flow_type == FlowCaseEnum::multi_species_acoustic_wave){
-        std::cout << "############### flow type is multi_species_acoustic_wave ###################" << std::endl;
-        if constexpr (nspecies>1 && (dim==2 && nstate==dim+2+(nspecies-1))){ //TO DO THIS DOES NOT WORK
+        if constexpr (nspecies==11 && (dim==2 && nstate==dim+2+(nspecies-1))){
             std::shared_ptr<FlowSolverCaseBase<dim, nstate>> flow_solver_case = std::make_shared<PeriodicCubeFlow<dim,nstate>>(parameters_input);
             return std::make_unique<FlowSolver<dim,nstate>>(parameters_input, flow_solver_case, parameter_handler_input);
         }
@@ -114,12 +113,23 @@ std::unique_ptr< FlowSolverBase > FlowSolverFactory<dim,nstate,nspecies>
         // This template parameters dim and nstate match the runtime parameters
         // then create the selected flow case with template parameters dim and nstate
         // Otherwise, keep decreasing nstate and dim until it matches
-        if(nstate == parameters_input->nstate) 
-            return FlowSolverFactory<dim,nstate,nspecies>::select_flow_case(parameters_input,parameter_handler_input);
-        else if constexpr (nstate > 1)
+        if(nstate == parameters_input->nstate)
+        { 
+            if(nspecies == parameters_input->number_of_species) {
+                return FlowSolverFactory<dim,nstate,nspecies>::select_flow_case(parameters_input,parameter_handler_input);
+            }
+            else if constexpr (nspecies > 1)
+                return FlowSolverFactory<dim,nstate,nspecies-1>::create_flow_solver(parameters_input,parameter_handler_input);
+            else {
+                return nullptr;
+            }
+        } 
+        else if constexpr (nstate > 1){
             return FlowSolverFactory<dim,nstate-1,nspecies>::create_flow_solver(parameters_input,parameter_handler_input);
-        else
+        }
+        else{
             return nullptr;
+        }
     }
     else if constexpr (dim > 1)
     {
@@ -135,6 +145,9 @@ std::unique_ptr< FlowSolverBase > FlowSolverFactory<dim,nstate,nspecies>
 // TO DO: Adding all the possible 5+N_SPECIES
 // template class FlowSolverFactory <PHILIP_DIM,5>; // ################ hey Liki its julien, try commenting this line
 template class FlowSolverFactory <PHILIP_DIM,(PHILIP_DIM+2)+(N_SPECIES-1),N_SPECIES>; 
+// #if N_SPECIES==1
+// template class FlowSolverFactory <PHILIP_DIM,(PHILIP_DIM+2)+(11-1),11>;
+// #endif
 
 } // FlowSolver namespace
 } // PHiLiP namespace

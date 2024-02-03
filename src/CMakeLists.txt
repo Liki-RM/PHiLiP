@@ -79,7 +79,12 @@ foreach(dim RANGE 1 3)
 
     # Library dependency
     set(ParameterLib ParametersLibrary)
-    string(CONCAT TestsLib Tests_${dim}D)
+    # Output library
+    if(${nspecies} EQUAL "1")
+        string(CONCAT TestsLib Tests_${dim}D)
+    else()
+        string(CONCAT TestsLib Tests_${dim}D_${nspecies}-SPECIES)
+    endif()
     target_link_libraries(${MAIN_TARGET} ${ParameterLib})
     target_link_libraries(${MAIN_TARGET} ${TestsLib})
     target_link_libraries(${MAIN_TARGET} m mpi)

@@ -86,7 +86,7 @@ void PeriodicCubeFlow<dim,nstate>::display_additional_flow_case_specific_paramet
 }
 
 #if N_SPECIES>1
-template class PeriodicCubeFlow <(PHILIP_DIM,PHILIP_DIM+2)+(N_SPECIES-1)>; 
+template class PeriodicCubeFlow <PHILIP_DIM,PHILIP_DIM+2+(N_SPECIES-1)>; 
 #else
 #if PHILIP_DIM==1
 template class PeriodicCubeFlow <PHILIP_DIM,PHILIP_DIM>;
