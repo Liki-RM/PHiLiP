@@ -604,18 +604,21 @@ int FlowSolver<dim,nstate>::run() const
     return 0;
 }
 
-#if PHILIP_DIM==1
-template class FlowSolver <PHILIP_DIM,PHILIP_DIM>;
-#endif
-
-#if PHILIP_DIM!=1
 template class FlowSolver <PHILIP_DIM,1>;
 template class FlowSolver <PHILIP_DIM,2>;
 template class FlowSolver <PHILIP_DIM,3>;
 template class FlowSolver <PHILIP_DIM,4>;
 template class FlowSolver <PHILIP_DIM,5>;
 template class FlowSolver <PHILIP_DIM,6>;
-#endif
+template class FlowSolver <PHILIP_DIM,7>;
+template class FlowSolver <PHILIP_DIM,8>;
+template class FlowSolver <PHILIP_DIM,9>;
+template class FlowSolver <PHILIP_DIM,10>;
+template class FlowSolver <PHILIP_DIM,11>;
+template class FlowSolver <PHILIP_DIM,12>;
+template class FlowSolver <PHILIP_DIM,13>;
+template class FlowSolver <PHILIP_DIM,14>;
+template class FlowSolver <PHILIP_DIM,15>;
 
 } // FlowSolver namespace
 } // PHiLiP namespace

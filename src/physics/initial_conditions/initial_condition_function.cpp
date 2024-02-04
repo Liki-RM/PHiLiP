@@ -645,8 +645,8 @@ inline real InitialConditionFunction_AcousticWave_Species<dim, nstate, real>
 // ========================================================
 // Acoustic Wave (Multi Species) -- Initial Condition (Uniform density)
 // ========================================================
-template <int dim, int nstate, typename real>
-InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real,nspecies>
 ::InitialConditionFunction_AcousticWave_MultiSpecies (
         Parameters::AllParameters const *const param)
     : InitialConditionFunction<dim,nstate,real>()
@@ -658,11 +658,11 @@ InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real>
     // Note that Euler primitive/conservative vars are the same as NS
     PHiLiP::Parameters::AllParameters parameters_euler = *param;
     parameters_euler.pde_type = Parameters::AllParameters::PartialDifferentialEquation::real_gas;
-    this->real_gas_physics = std::dynamic_pointer_cast<Physics::RealGas<dim,dim+2+2-1,double>>( // TO DO: N_SPECIES
-                Physics::PhysicsFactory<dim,dim+2+2-1,double>::create_Physics(&parameters_euler)); // TO DO: N_SPECIES
+    this->real_gas_physics = std::dynamic_pointer_cast<Physics::RealGas<dim,nstate,double,nspecies>>(
+                Physics::PhysicsFactory<dim,nstate,double>::create_Physics(&parameters_euler));
 }
-template <int dim, int nstate, typename real>
-real InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real>
+template <int dim, int nstate, typename real,int nspecies>
+real InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real,nspecies>
 ::primitive_value(const dealii::Point<dim,real> &point, const unsigned int istate) const
 {
     // Note: This is in non-dimensional form (free-stream values as reference)
@@ -703,8 +703,8 @@ real InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real>
     return value;
 }
 
-template <int dim, int nstate, typename real>
-real InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+real InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real,nspecies>
 ::convert_primitive_to_conversative_value(
     const dealii::Point<dim,real> &point, const unsigned int istate) const
 {
@@ -723,8 +723,8 @@ real InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real>
     return value;
 }
 
-template <int dim, int nstate, typename real>
-inline real InitialConditionFunction_AcousticWave_MultiSpecies<dim, nstate, real>
+template <int dim, int nstate, typename real, int nspecies>
+inline real InitialConditionFunction_AcousticWave_MultiSpecies<dim, nstate, real, nspecies>
 ::value(const dealii::Point<dim,real> &point, const unsigned int istate) const
 {
     real value = 0.0;
@@ -800,8 +800,13 @@ InitialConditionFactory<dim,nstate, real>::create_InitialConditionFunction(
             return std::make_shared<InitialConditionFunction_AcousticWave_Species<dim,nstate,real> >(param);
         }
     } else if (flow_type == FlowCaseEnum::multi_species_acoustic_wave) {
-        if constexpr (dim==2 && nstate==dim+2+2-1){ // TO DO: N_SPECIES
-            return std::make_shared<InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real> >(param);
+        if constexpr (dim==2){
+            constexpr int nspecies = nstate-dim-2+1;
+            if constexpr (nspecies==2 ||
+                          (nspecies==5 || 
+                           nspecies==11)) {
+                return std::make_shared<InitialConditionFunction_AcousticWave_MultiSpecies<dim,nstate,real,nspecies> >(param);
+            }
         }
     } else {
         std::cout << "Invalid Flow Case Type. You probably forgot to add it to the list of flow cases in initial_condition_function.cpp" << std::endl;
@@ -816,6 +821,15 @@ template class InitialConditionFunction <PHILIP_DIM, 3, double>;
 template class InitialConditionFunction <PHILIP_DIM, 4, double>;
 template class InitialConditionFunction <PHILIP_DIM, 5, double>;
 template class InitialConditionFunction <PHILIP_DIM, 6, double>;
+template class InitialConditionFunction <PHILIP_DIM, 7, double>;
+template class InitialConditionFunction <PHILIP_DIM, 8, double>;
+template class InitialConditionFunction <PHILIP_DIM, 9, double>;
+template class InitialConditionFunction <PHILIP_DIM, 10, double>;
+template class InitialConditionFunction <PHILIP_DIM, 11, double>;
+template class InitialConditionFunction <PHILIP_DIM, 12, double>;
+template class InitialConditionFunction <PHILIP_DIM, 13, double>;
+template class InitialConditionFunction <PHILIP_DIM, 14, double>;
+template class InitialConditionFunction <PHILIP_DIM, 15, double>;
 
 template class InitialConditionFactory <PHILIP_DIM, 1, double>;
 template class InitialConditionFactory <PHILIP_DIM, 2, double>;
@@ -823,6 +837,15 @@ template class InitialConditionFactory <PHILIP_DIM, 3, double>;
 template class InitialConditionFactory <PHILIP_DIM, 4, double>;
 template class InitialConditionFactory <PHILIP_DIM, 5, double>;
 template class InitialConditionFactory <PHILIP_DIM, 6, double>;
+template class InitialConditionFactory <PHILIP_DIM, 7, double>;
+template class InitialConditionFactory <PHILIP_DIM, 8, double>;
+template class InitialConditionFactory <PHILIP_DIM, 9, double>;
+template class InitialConditionFactory <PHILIP_DIM, 10, double>;
+template class InitialConditionFactory <PHILIP_DIM, 11, double>;
+template class InitialConditionFactory <PHILIP_DIM, 12, double>;
+template class InitialConditionFactory <PHILIP_DIM, 13, double>;
+template class InitialConditionFactory <PHILIP_DIM, 14, double>;
+template class InitialConditionFactory <PHILIP_DIM, 15, double>;
  
 #if PHILIP_DIM==1
 template class InitialConditionFunction_BurgersViscous <PHILIP_DIM, 1, double>;
@@ -844,6 +867,9 @@ template class InitialConditionFunction_IsentropicVortex <PHILIP_DIM, PHILIP_DIM
 template class InitialConditionFunction_KHI <PHILIP_DIM, PHILIP_DIM+2, double>;
 template class InitialConditionFunction_AcousticWave_Air <PHILIP_DIM, PHILIP_DIM+2, double>;
 template class InitialConditionFunction_AcousticWave_Species <PHILIP_DIM, PHILIP_DIM+2, double>;
+template class InitialConditionFunction_AcousticWave_MultiSpecies <PHILIP_DIM, PHILIP_DIM+2+2-1, double, 2>;
+template class InitialConditionFunction_AcousticWave_MultiSpecies <PHILIP_DIM, PHILIP_DIM+2+5-1, double, 5>;
+template class InitialConditionFunction_AcousticWave_MultiSpecies <PHILIP_DIM, PHILIP_DIM+2+11-1, double, 11>;
 #endif
 
 // functions instantiated for all dim

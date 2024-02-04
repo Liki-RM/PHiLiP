@@ -204,7 +204,15 @@ template class ArtificialDissipationBase<PHILIP_DIM,3>; template class Laplacian
 template class ArtificialDissipationBase<PHILIP_DIM,4>; template class LaplacianArtificialDissipation < PHILIP_DIM,4>;
 template class ArtificialDissipationBase<PHILIP_DIM,5>; template class LaplacianArtificialDissipation < PHILIP_DIM,5>;
 template class ArtificialDissipationBase<PHILIP_DIM,6>; template class LaplacianArtificialDissipation < PHILIP_DIM,6>;
-
+// template class ArtificialDissipationBase<PHILIP_DIM,7>; template class LaplacianArtificialDissipation < PHILIP_DIM,7>; 
+// template class ArtificialDissipationBase<PHILIP_DIM,8>; template class LaplacianArtificialDissipation < PHILIP_DIM,8>;
+// template class ArtificialDissipationBase<PHILIP_DIM,9>; template class LaplacianArtificialDissipation < PHILIP_DIM,9>;
+// template class ArtificialDissipationBase<PHILIP_DIM,10>; template class LaplacianArtificialDissipation < PHILIP_DIM,10>;
+// template class ArtificialDissipationBase<PHILIP_DIM,11>; template class LaplacianArtificialDissipation < PHILIP_DIM,11>; 
+// template class ArtificialDissipationBase<PHILIP_DIM,12>; template class LaplacianArtificialDissipation < PHILIP_DIM,12>;
+// template class ArtificialDissipationBase<PHILIP_DIM,13>; template class LaplacianArtificialDissipation < PHILIP_DIM,13>;
+// template class ArtificialDissipationBase<PHILIP_DIM,14>; template class LaplacianArtificialDissipation < PHILIP_DIM,14>;
+// template class ArtificialDissipationBase<PHILIP_DIM,15>; template class LaplacianArtificialDissipation < PHILIP_DIM,15>;
 template class PhysicalArtificialDissipation<PHILIP_DIM,PHILIP_DIM+2>;
 
 template class EnthalpyConservingArtificialDissipation < PHILIP_DIM,PHILIP_DIM+2>; 

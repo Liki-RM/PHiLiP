@@ -11,7 +11,7 @@ namespace PHiLiP {
 namespace Physics {
 
 /// RealGas equations. Derived from PhysicsBase
-template <int dim, int nstate, typename real> // TO DO: TEMPLATE for nspecies -- see how the LES class has nstate_baseline_physics
+template <int dim, int nstate, typename real, int nspecies> // TO DO: TEMPLATE for nspecies -- see how the LES class has nstate_baseline_physics
 class RealGas : public PhysicsBase <dim, nstate, real>
 {
 protected:

@@ -245,5 +245,14 @@ template class SetInitialCondition<PHILIP_DIM, 3, double>;
 template class SetInitialCondition<PHILIP_DIM, 4, double>;
 template class SetInitialCondition<PHILIP_DIM, 5, double>;
 template class SetInitialCondition<PHILIP_DIM, 6, double>;
+template class SetInitialCondition<PHILIP_DIM, 7, double>;
+template class SetInitialCondition<PHILIP_DIM, 8, double>;
+template class SetInitialCondition<PHILIP_DIM, 9, double>;
+template class SetInitialCondition<PHILIP_DIM, 10, double>;
+template class SetInitialCondition<PHILIP_DIM, 11, double>;
+template class SetInitialCondition<PHILIP_DIM, 12, double>;
+template class SetInitialCondition<PHILIP_DIM, 13, double>;
+template class SetInitialCondition<PHILIP_DIM, 14, double>;
+template class SetInitialCondition<PHILIP_DIM, 15, double>;
 
 }//end of namespace PHILIP

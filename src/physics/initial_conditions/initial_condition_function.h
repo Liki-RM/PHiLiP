@@ -423,7 +423,7 @@ protected:
 };
 
 /// Initial Condition Function: AcousticWave_MultiSpecies (uniform density)
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 class InitialConditionFunction_AcousticWave_MultiSpecies : public InitialConditionFunction<dim,nstate,real>
 {
 protected:
@@ -454,8 +454,8 @@ protected:
     /// Converts value from: primitive to conservative
     real convert_primitive_to_conversative_value(const dealii::Point<dim,real> &point, const unsigned int istate = 0) const;
 
-    // Euler physics pointer. Used to convert primitive to conservative.
-    std::shared_ptr < Physics::RealGas<dim, nstate, double > > real_gas_physics;
+    // Used to convert primitive to conservative.
+    std::shared_ptr < Physics::RealGas<dim, nstate, double, nspecies > > real_gas_physics;
 };
 
 /// Initial condition function factory

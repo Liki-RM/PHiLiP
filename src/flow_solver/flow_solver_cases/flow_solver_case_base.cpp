@@ -190,6 +190,14 @@ template class FlowSolverCaseBase<PHILIP_DIM,3>;
 template class FlowSolverCaseBase<PHILIP_DIM,4>;
 template class FlowSolverCaseBase<PHILIP_DIM,5>;
 template class FlowSolverCaseBase<PHILIP_DIM,6>;
-
+template class FlowSolverCaseBase<PHILIP_DIM,7>;
+template class FlowSolverCaseBase<PHILIP_DIM,8>;
+template class FlowSolverCaseBase<PHILIP_DIM,9>;
+template class FlowSolverCaseBase<PHILIP_DIM,10>;
+template class FlowSolverCaseBase<PHILIP_DIM,11>;
+template class FlowSolverCaseBase<PHILIP_DIM,12>;
+template class FlowSolverCaseBase<PHILIP_DIM,13>;
+template class FlowSolverCaseBase<PHILIP_DIM,14>;
+template class FlowSolverCaseBase<PHILIP_DIM,15>;
 } // FlowSolver namespace
 } // PHiLiP namespace

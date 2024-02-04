@@ -37,7 +37,16 @@ std::unique_ptr< dealii::DataPostprocessor<dim> > PostprocessorFactory<dim>
     } else if (pde_type == PDE_enum::inviscid_real_gas) {
         return std::make_unique< PhysicsPostprocessor<dim,dim+2> >(parameters_input);
     } else if (pde_type == PDE_enum::real_gas) {
-        return std::make_unique< PhysicsPostprocessor<dim,dim+2+2-1> >(parameters_input); // TO DO: N_SPECIES
+        if(parameters_input->number_of_species==2){
+            return std::make_unique< PhysicsPostprocessor<dim,dim+2+2-1> >(parameters_input);
+        } else if(parameters_input->number_of_species==5){
+            return std::make_unique< PhysicsPostprocessor<dim,dim+2+5-1> >(parameters_input);
+        }else if(parameters_input->number_of_species==11){
+            return std::make_unique< PhysicsPostprocessor<dim,dim+2+11-1> >(parameters_input);
+        } else {
+            std::cout << "Invalid PDE when creating post-processor" << std::endl;
+            std::abort();
+        }
     } else if ((pde_type == PDE_enum::physics_model) && (model_type == Model_enum::reynolds_averaged_navier_stokes) && (rans_model_type == RANSModel_enum::SA_negative)) {
         return std::make_unique< PhysicsPostprocessor<dim,dim+3> >(parameters_input);
     } 
@@ -117,6 +126,15 @@ template class PhysicsPostprocessor < PHILIP_DIM, 3 >;
 template class PhysicsPostprocessor < PHILIP_DIM, 4 >;
 template class PhysicsPostprocessor < PHILIP_DIM, 5 >;
 template class PhysicsPostprocessor < PHILIP_DIM, 6 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 7 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 8 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 9 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 10 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 11 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 12 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 13 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 14 >;
+template class PhysicsPostprocessor < PHILIP_DIM, 15 >;
 } // Postprocess namespace
 } // PHiLiP namespace
 

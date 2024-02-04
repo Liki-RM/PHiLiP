@@ -218,7 +218,7 @@ real DGBaseState<dim, nstate, real, MeshType>::evaluate_CFL(std::vector<std::arr
 }
 
 // Define a sequence of indices representing the range [1, 5]
-#define POSSIBLE_NSTATE (1)(2)(3)(4)(5)(6)
+#define POSSIBLE_NSTATE (1)(2)(3)(4)(5)(6)(7)(8)(9)(10)(11)(12)(13)(14)(15)// all these 
 
 // Define a macro to instantiate MyTemplate for a specific index
 #define INSTANTIATE_DISTRIBUTED(r, data, index) \

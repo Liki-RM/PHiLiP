@@ -10,8 +10,8 @@
 namespace PHiLiP {
 namespace Physics {
 
-template <int dim, int nstate, typename real>
-RealGas<dim,nstate,real>::RealGas ( 
+template <int dim, int nstate, typename real, int nspecies>
+RealGas<dim,nstate,real,nspecies>::RealGas ( 
     const Parameters::AllParameters *const                    parameters_input,
     std::shared_ptr< ManufacturedSolutionFunction<dim,real> > manufactured_solution_function,
     const bool                                                has_nonzero_diffusion,
@@ -52,11 +52,11 @@ RealGas<dim,nstate,real>::RealGas (
     }
     
     // std::cout<<"In constructor of real gas."<<std::endl<<std::flush;
-    static_assert(nstate==dim+2+2-1, "Physics::RealGas() should be created with nstate=(PHILIP_DIM+2)+(N_SPECIES-1)"); // TO DO: UPDATE THIS with nspecies
+    static_assert(nstate==dim+2+nspecies-1, "Physics::RealGas() should be created with nstate=(PHILIP_DIM+2)+(N_SPECIES-1)"); // TO DO: UPDATE THIS with nspecies
 }
 
-template <int dim, int nstate, typename real>
-std::array<real,nstate> RealGas<dim, nstate, real>
+template <int dim, int nstate, typename real, int nspecies>
+std::array<real,nstate> RealGas<dim,nstate,real,nspecies>
 ::compute_entropy_variables (
     const std::array<real,nstate> &conservative_soln) const
 {
@@ -65,8 +65,8 @@ std::array<real,nstate> RealGas<dim, nstate, real>
     return conservative_soln;
 }
 
-template <int dim, int nstate, typename real>
-std::array<real,nstate> RealGas<dim, nstate, real>
+template <int dim, int nstate, typename real, int nspecies>
+std::array<real,nstate> RealGas<dim,nstate,real,nspecies>
 ::compute_conservative_variables_from_entropy_variables (
     const std::array<real,nstate> &entropy_var) const
 {
@@ -75,8 +75,8 @@ std::array<real,nstate> RealGas<dim, nstate, real>
     return entropy_var;
 }
 
-template <int dim, int nstate, typename real>
-std::array<real,nstate> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+std::array<real,nstate> RealGas<dim,nstate,real,nspecies>
 ::convective_eigenvalues (
     const std::array<real,nstate> &/*conservative_soln*/,
     const dealii::Tensor<1,dim,real> &/*normal*/) const
@@ -87,8 +87,8 @@ std::array<real,nstate> RealGas<dim,nstate,real>
     return eig;
 }
 
-template <int dim, int nstate, typename real>
-real RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+real RealGas<dim,nstate,real,nspecies>
 ::max_convective_eigenvalue (const std::array<real,nstate> &/*conservative_soln*/) const
 {
     // TO DO: define this
@@ -96,8 +96,8 @@ real RealGas<dim,nstate,real>
     return max_eig;
 }
 
-template <int dim, int nstate, typename real>
-real RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+real RealGas<dim,nstate,real,nspecies>
 ::max_convective_normal_eigenvalue (
     const std::array<real,nstate> &conservative_soln,
     const dealii::Tensor<1,dim,real> &normal) const
@@ -112,8 +112,8 @@ real RealGas<dim,nstate,real>
     return max_normal_eig;
 }
 
-template <int dim, int nstate, typename real>
-real RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+real RealGas<dim,nstate,real,nspecies>
 ::max_viscous_eigenvalue (const std::array<real,nstate> &/*conservative_soln*/) const
 {
     // zero because inviscid
@@ -121,8 +121,8 @@ real RealGas<dim,nstate,real>
     return max_eig;
 }
 
-template <int dim, int nstate, typename real>
-std::array<dealii::Tensor<1,dim,real>,nstate> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+std::array<dealii::Tensor<1,dim,real>,nstate> RealGas<dim,nstate,real,nspecies>
 ::dissipative_flux (
     const std::array<real,nstate> &/*conservative_soln*/,
     const std::array<dealii::Tensor<1,dim,real>,nstate> &/*solution_gradient*/,
@@ -136,8 +136,8 @@ std::array<dealii::Tensor<1,dim,real>,nstate> RealGas<dim,nstate,real>
     return diss_flux;
 }
 
-template <int dim, int nstate, typename real>
-std::array<real,nstate> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+std::array<real,nstate> RealGas<dim,nstate,real,nspecies>
 ::source_term (
     const dealii::Point<dim,real> &/*pos*/,
     const std::array<real,nstate> &/*conservative_soln*/,
@@ -153,7 +153,7 @@ std::array<real,nstate> RealGas<dim,nstate,real>
 // TO DO: Provide required definition for this
 // template <int dim, int nstate, typename real>
 // template<typename real2>
-// bool RealGas<dim,nstate,real>::check_positive_quantity(real2 &qty, const std::string qty_name) const {
+// bool RealGas<dim,nstate,real,nspecies>::check_positive_quantity(real2 &qty, const std::string qty_name) const {
 //     bool qty_is_positive;
 //     if (qty < 0.0) {
 //         // Refer to base class for non-physical results handling
@@ -167,8 +167,8 @@ std::array<real,nstate> RealGas<dim,nstate,real>
 // }
 
 
-template <int dim, int nstate, typename real>
-void RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+void RealGas<dim,nstate,real,nspecies>
 ::boundary_face_values (
    const int /*boundary_type*/,
    const dealii::Point<dim, real> &/*pos*/,
@@ -181,8 +181,8 @@ void RealGas<dim,nstate,real>
     // TO DO: Update this you are using any kind of BC that is not periodic
 }
 
-template <int dim, int nstate, typename real>
-inline std::array<real,nstate> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+inline std::array<real,nstate> RealGas<dim,nstate,real,nspecies>
 ::convert_primitive_to_conservative ( const std::array<real,nstate> &primitive_soln ) const
 {
     std::array<real, nstate> conservative_soln;
@@ -196,9 +196,9 @@ inline std::array<real,nstate> RealGas<dim,nstate,real>
 
 /* MAIN FUNCTIONS */
 /// f_M1: mixture density
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 template<typename real2>
-inline real2 RealGas<dim,nstate,real>
+inline real2 RealGas<dim,nstate,real,nspecies>
 :: compute_mixture_density ( const std::array<real2,nstate> &conservative_soln ) const
 {
     const real2 mixture_density = conservative_soln[0];
@@ -206,9 +206,9 @@ inline real2 RealGas<dim,nstate,real>
 }
 
 /// f_M6: species densities
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 template<typename real2>
-inline dealii::Tensor<1,nstate-dim-1,real2> RealGas<dim,nstate,real>
+inline dealii::Tensor<1,nstate-dim-1,real2> RealGas<dim,nstate,real,nspecies>
 ::compute_species_densities ( const std::array<real2,nstate> &conservative_soln ) const
 {
     const real2 mixture_density = compute_mixture_density(conservative_soln);
@@ -224,9 +224,9 @@ inline dealii::Tensor<1,nstate-dim-1,real2> RealGas<dim,nstate,real>
 }
 
 /// f_M7: mass fractions
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 template<typename real2>
-inline dealii::Tensor<1,nstate-dim-1,real2> RealGas<dim,nstate,real>
+inline dealii::Tensor<1,nstate-dim-1,real2> RealGas<dim,nstate,real,nspecies>
 ::compute_mass_fractions ( const std::array<real2,nstate> &conservative_soln ) const
 {
     const real2 mixture_density = compute_mixture_density(conservative_soln);
@@ -240,9 +240,9 @@ inline dealii::Tensor<1,nstate-dim-1,real2> RealGas<dim,nstate,real>
 }
 
 /// f_M8: mixture_from_species
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 template <typename real2>
-inline real2 RealGas<dim,nstate,real>
+inline real2 RealGas<dim,nstate,real,nspecies>
 ::compute_mixture_from_species ( const dealii::Tensor<1,nstate-dim-1,real2> &mass_fractions, const dealii::Tensor<1,nstate-dim-1,real2> &species) const
 {
     real2 mixture = 0.0; 
@@ -254,9 +254,9 @@ inline real2 RealGas<dim,nstate,real>
 }
 
 /// f_M9: dimensional temperature
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 template<typename real2>
-inline real2 RealGas<dim,nstate,real>
+inline real2 RealGas<dim,nstate,real,nspecies>
 ::compute_dimensional_temperature ( const real temperature ) const
 {
     const real2 dimensional_temperature = temperature*this->temperature_ref;
@@ -266,7 +266,7 @@ inline real2 RealGas<dim,nstate,real>
 // /// f_M10: species specific heat at constant pressure
 // template <int dim, int nstate, typename real>
 // template<typename real2>
-// inline real2 RealGas<dim,nstate,real>
+// inline real2 RealGas<dim,nstate,real,nspecies>
 // ::compute_species_specific_Cp ( const real temperature ) const
 // {
 //     const real2 dimensional_temperature = compute_dimensional_temperature(temperature);
@@ -275,9 +275,9 @@ inline real2 RealGas<dim,nstate,real>
 
 
 //// up
-template <int dim, int nstate, typename real>
+template <int dim, int nstate, typename real, int nspecies>
 template<typename real2>
-inline dealii::Tensor<1,dim,real2> RealGas<dim,nstate,real>
+inline dealii::Tensor<1,dim,real2> RealGas<dim,nstate,real,nspecies>
 ::compute_velocities ( const std::array<real2,nstate> &conservative_soln ) const
 {
     const real2 density = conservative_soln[0];
@@ -286,16 +286,16 @@ inline dealii::Tensor<1,dim,real2> RealGas<dim,nstate,real>
     return vel;
 }
 
-template <int dim, int nstate, typename real>
-inline real RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+inline real RealGas<dim,nstate,real,nspecies>
 ::compute_sound ( const std::array<real,nstate> &conservative_soln ) const
 {
     return conservative_soln[0]*0.0;
 }
 
 /// IT IS FOR ALGORITHM 7
-template <int dim, int nstate, typename real>
-std::array<dealii::Tensor<1,dim,real>,nstate> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+std::array<dealii::Tensor<1,dim,real>,nstate> RealGas<dim,nstate,real,nspecies>
 ::convective_flux (const std::array<real,nstate> &conservative_soln) const
 {
     std::array<dealii::Tensor<1,dim,real>,nstate> conv_flux;
@@ -306,8 +306,8 @@ std::array<dealii::Tensor<1,dim,real>,nstate> RealGas<dim,nstate,real>
     return conv_flux;
 }
 
-template <int dim, int nstate, typename real>
-dealii::Vector<double> RealGas<dim,nstate,real>::post_compute_derived_quantities_vector (
+template <int dim, int nstate, typename real, int nspecies>
+dealii::Vector<double> RealGas<dim,nstate,real,nspecies>::post_compute_derived_quantities_vector (
     const dealii::Vector<double>              &uh,
     const std::vector<dealii::Tensor<1,dim> > &duh,
     const std::vector<dealii::Tensor<2,dim> > &dduh,
@@ -373,8 +373,8 @@ dealii::Vector<double> RealGas<dim,nstate,real>::post_compute_derived_quantities
     return computed_quantities;
 }
 
-template <int dim, int nstate, typename real>
-std::vector<dealii::DataComponentInterpretation::DataComponentInterpretation> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+std::vector<dealii::DataComponentInterpretation::DataComponentInterpretation> RealGas<dim,nstate,real,nspecies>
 ::post_get_data_component_interpretation () const
 {
     namespace DCI = dealii::DataComponentInterpretation;
@@ -403,8 +403,8 @@ std::vector<dealii::DataComponentInterpretation::DataComponentInterpretation> Re
     return interpretation;
 }
 
-template <int dim, int nstate, typename real>
-std::vector<std::string> RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+std::vector<std::string> RealGas<dim,nstate,real,nspecies>
 ::post_get_names () const
 {
     std::vector<std::string> names = PhysicsBase<dim,nstate,real>::post_get_names ();
@@ -429,8 +429,8 @@ std::vector<std::string> RealGas<dim,nstate,real>
     return names;
 }
 
-template <int dim, int nstate, typename real>
-dealii::UpdateFlags RealGas<dim,nstate,real>
+template <int dim, int nstate, typename real, int nspecies>
+dealii::UpdateFlags RealGas<dim,nstate,real,nspecies>
 ::post_get_needed_update_flags () const
 {
     //return update_values | update_gradients;
@@ -440,14 +440,25 @@ dealii::UpdateFlags RealGas<dim,nstate,real>
 }
 
 
-
-
 // Instantiate explicitly
-template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, double     >;
-template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, FadType    >;
-template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, RadType    >;
-template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, FadFadType >;
-template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, RadFadType >;
+// 2 species
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, double    , 2 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, FadType   , 2 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, RadType   , 2 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, FadFadType, 2 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+2-1, RadFadType, 2 >;
+// 5 species
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+5-1, double    , 5 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+5-1, FadType   , 5 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+5-1, RadType   , 5 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+5-1, FadFadType, 5 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+5-1, RadFadType, 5 >;
+// 11 species
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+11-1, double    , 11 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+11-1, FadType   , 11 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+11-1, RadType   , 11 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+11-1, FadFadType, 11 >;
+template class RealGas < PHILIP_DIM, PHILIP_DIM+2+11-1, RadFadType, 11 >;
 
 } // Physics namespace
 } // PHiLiP namespace

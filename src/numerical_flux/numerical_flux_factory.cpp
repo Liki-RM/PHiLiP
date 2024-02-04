@@ -30,7 +30,7 @@ NumericalFluxFactory<dim, nstate, real>
         }
     }
     else if(conv_num_flux_type == AllParam::ConvectiveNumericalFlux::lax_friedrichs) {
-        return std::make_unique< LaxFriedrichs<dim, nstate, real> > (physics_input);
+        return std::make_unique< LaxFriedrichs<dim, nstate, real> > (physics_input); // instantiate all the ones related to LxF
     } 
     else if(is_euler_based) {
         if constexpr (dim+2==nstate) {
@@ -141,6 +141,15 @@ template class NumericalFluxFactory<PHILIP_DIM, 3, double>;
 template class NumericalFluxFactory<PHILIP_DIM, 4, double>;
 template class NumericalFluxFactory<PHILIP_DIM, 5, double>;
 template class NumericalFluxFactory<PHILIP_DIM, 6, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 7, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 8, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 9, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 10, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 11, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 12, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 13, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 14, double>;
+template class NumericalFluxFactory<PHILIP_DIM, 15, double>;
 
 template class NumericalFluxFactory<PHILIP_DIM, 1, FadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 2, FadType >;
@@ -148,6 +157,15 @@ template class NumericalFluxFactory<PHILIP_DIM, 3, FadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 4, FadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 5, FadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 6, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 7, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 8, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 9, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 10, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 11, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 12, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 13, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 14, FadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 15, FadType >;
 
 template class NumericalFluxFactory<PHILIP_DIM, 1, RadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 2, RadType >;
@@ -155,6 +173,15 @@ template class NumericalFluxFactory<PHILIP_DIM, 3, RadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 4, RadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 5, RadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 6, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 7, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 8, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 9, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 10, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 11, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 12, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 13, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 14, RadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 15, RadType >;
 
 template class NumericalFluxFactory<PHILIP_DIM, 1, FadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 2, FadFadType >;
@@ -162,6 +189,15 @@ template class NumericalFluxFactory<PHILIP_DIM, 3, FadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 4, FadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 5, FadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 6, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 7, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 8, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 9, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 10, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 11, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 12, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 13, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 14, FadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 15, FadFadType >;
 
 template class NumericalFluxFactory<PHILIP_DIM, 1, RadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 2, RadFadType >;
@@ -169,7 +205,15 @@ template class NumericalFluxFactory<PHILIP_DIM, 3, RadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 4, RadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 5, RadFadType >;
 template class NumericalFluxFactory<PHILIP_DIM, 6, RadFadType >;
-
+template class NumericalFluxFactory<PHILIP_DIM, 7, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 8, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 9, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 10, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 11, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 12, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 13, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 14, RadFadType >;
+template class NumericalFluxFactory<PHILIP_DIM, 15, RadFadType >;
 
 } // NumericalFlux namespace
 } // PHiLiP namespace
